@@ -12,7 +12,7 @@ def create_game(players, mapfile):
     mapLines = []
     mapString = ''
     mapFile = ''
-    cordinatesMap = {}
+    coordinatesMap = {}
     settingsMap = {}
 
     mode = 'comment'
@@ -31,8 +31,8 @@ def create_game(players, mapfile):
         if line.find('<start-bonuses>')!=-1:
             mode = 'bonus'
             continue
-        if line.find('<start-cordinates>')!=-1:
-            mode = 'cordinates'
+        if line.find('<start-coordinates>')!=-1:
+            mode = 'coordinates'
             continue
         if line.find('<start-mapFile>')!=-1:
             mode = 'mapFile'
@@ -46,9 +46,9 @@ def create_game(players, mapfile):
             continue
         if mode == 'comment':
             continue
-        if mode == 'cordinates':
+        if mode == 'coordinates':
             inputs = line.split()
-            cordinatesMap[inputs[0]]=(int(inputs[1]),int(inputs[2]))
+            coordinatesMap[inputs[0]]=(int(inputs[1]),int(inputs[2]))
             continue
         if mode == 'mapFile':
             mapFile = line.split()[0]
@@ -87,7 +87,7 @@ def create_game(players, mapfile):
                 print "(bonuses reference one I can't find:",country,')'
                 sys.exit()
 
-    g = game.Game(nodeNetwork, players, bonusesList, mapString, cordinatesMap, mapFile, settingsMap)
+    g = game.Game(nodeNetwork, players, bonusesList, mapString, coordinatesMap, mapFile, settingsMap)
     print 'finished making game!'
     rules = g.rules
     i = 0

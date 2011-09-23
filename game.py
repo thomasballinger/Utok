@@ -4,10 +4,10 @@ class Game:
     """Represents the current state of a risk game
 
     Includes full specification of the map, rules, players and current game state.  
-    Includes the NAME ONLY of the graphical map file, along with cordinates of territories on this map."""
-    def __init__(self,nodeNetwork=None, players={}, bonuses=[], mapString=None, cordinates=None, mapFile=None, settingsMap={}):
+    Includes the NAME ONLY of the graphical map file, along with coordinates of territories on this map."""
+    def __init__(self,nodeNetwork=None, players={}, bonuses=[], mapString=None, coordinates=None, mapFile=None, settingsMap={}):
         self.mapFile = mapFile
-        self.cordinates = cordinates
+        self.coordinates = coordinates
         self.rules = Rules(map=nodeNetwork,players=players)
         self.whosTurn = self.rules.players[0]
         self.turnStage = 'reinforce'
@@ -21,7 +21,7 @@ class Game:
         for player in self.rules.players:
             self.reinforcementsToPlace[player]=0
         self.reinforced = False
-        if not mapString and not (cordinates and mapFile):
+        if not mapString and not (coordinates and mapFile):
             print "this game has no pretty visualization available"
         self.mapString = mapString
         self.settingsMap = settingsMap
@@ -282,7 +282,7 @@ class Game:
                 return False
 
     def getCordinates(self, country):
-        return self.cordinates[country]
+        return self.coordinates[country]
 
     def getAdjacentAttacks(self, country):
         possibleAttacks = []
@@ -347,7 +347,7 @@ class Game:
         return self.mapString
 
     def getCordinatesMap(self):
-        return self.cordinates
+        return self.coordinates
 
     def getMapFile(self):
         return self.mapFile
