@@ -1,0 +1,52 @@
+world map by thomas ballinger
+pretty dumb map huh
+we can use it as a template for now
+ 
+note that connections are bidirectional; you don't actually have to
+ specify any connections from a country, as long as it has connections
+ to it.
+Don't misspell any countries!!!
+Countries can't have numbers or punctuation, and must be one word!
+
+<start-nodeNetwork>
+USA Canada Mexico
+Canada Alaska USA
+Mexico Cuba England USA
+Cuba USA
+England Iceland Mexico
+Iceland Greenland England
+Greenland Iceland Canada
+Alaska Canada
+<end-nodeNetwork>
+
+This next section is optional, but it's so much better to have bonuses!
+<start-bonuses>
+Alaska Canada USA Mexico 4
+Iceland England 2
+Cuba 2
+<end-bonuses>
+
+<42> pnl_d4_8 /home/tomb % 12345678901234567890123456789012345678901234567890000 
+this is the width of a standard terminal (it's ok to go beyond that,
+ but andrew doesn't like it)
+<start-map>
+ Alaska   Alaska          ...............\___     Greenland         ___/      
+    ___________    ______ :                  \_   Greenland        /          
+   /       /   \__/      \  Canada             \__________________/           
+  /   ____/ Canada       /                                       :            
+ |___/   /______________/___ ___    +1 for Alaska                :_______     
+        /                       /     and USA          Iceland   /      /     
+       /                       /                       Iceland  /      /..... 
+      |                       /  +4 bonus for                   \_____/     / 
+      |       USA            /    these four        +2 bonus for           /  
+     /                      |     countries           these two  England  /   
+    /        USA***         |   (AK,CA,USA,MX)        countries   England \___
+    \___     ___________    |                                              :  
+        \___/   /       \__/                                               :  
+         |     |                    _________                              :  
+         \     |  _____............/  Cuba   /   +2 for having             :  
+          \     \/    /  Mexico   /  Cuba** /    Cuba because              :  
+           \_       _/   Mexico  /_________/     it's awesome              :  
+             \_____/.......                    ............................:  
+                          :....................:                              
+<end-map>

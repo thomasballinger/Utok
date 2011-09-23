@@ -1,0 +1,4 @@
+# yay gitignore #
+*.pyc
+*.swp
+
