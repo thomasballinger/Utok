@@ -12,7 +12,8 @@ from flask import abort
 from flask import render_template
 from flask import flash
 from utok import textDisplay
-from utok import game 
+from utok import game
+from models import GameEntry
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
@@ -22,21 +23,16 @@ r = redis.Redis()
 
 @app.route('/', methods=['GET'])
 def dashboard():
-    game_ids = [str(x) for x in r.smembers('games')]
-    game_pickles = []
-#    for game_id in game_ids:
-#        game_pickles.append(r.get('game:'+game_id+':pickle'))
-    game_pickles = [r.get('game:'+game_id+':pickle') for game_id in game_ids]
-    game_players = [r.smembers('game:'+game_id+':players') for game_id in game_ids]
-    games = [game_ids[i]+':'+str(game_players[i]) for i in range(len(game_players))]
-
+    gameObjs = [GameEntry(x) for x in r.smembers('games')]
+    game_players = [gameObj.get_players() for gameObj in gameObjs]
+    game_names = [gameObj.get_name() for gameObj in gameObjs]
+    games = [game_names[i]+':'+str(game_players[i]) for i in range(len(game_players))]
     strings = games
     return render_template('dashboard.html', strings=games)
 
 @app.route('/game/<int:game_id>/')
 def display_game(game_id):
-    pickle_obj = str(r.get('game:'+str(game_id)+':pickle'))
-    g = pickle.loads(pickle_obj)
+    g = GameEntry(game_id).get_game()
     d = textDisplay.Display(g)
     s = d.get()
     return '<pre>' + s + '</pre>'

@@ -7,23 +7,14 @@ import cPickle as pickle
 from random import choice
 import sys
 import os
+from models import GameEntry
 
 r = redis.Redis()
 
 def add_game(name, users, mapfile):
     g = mapreader.create_game(users, mapfile)
-    s = pickle.dumps(g)
-    game_id = str(r.incr('gamecounter'))
-    game_pickle_key = 'game:'+game_id+':pickle'
-    game_user_set_key = 'game:'+game_id+':players'
-    for user in users:
-        r.sadd(game_user_set_key, user)
-    r.set(game_pickle_key, s)
-    r.sadd('games', game_id)
-    for user in users:
-        if not r.sismember('users', user):
-            r.sadd('users', user)
-        r.sadd('users:'+user, game_pickle_key)
+    gObj = GameEntry()
+    gObj.set_name_game_players(name, g, users)
     return True
 
 def populate():
