@@ -40,4 +40,4 @@ def populate():
         add_game(name, users, 'utok/worldmap.txt')
 
 if __name__ == '__main__':
-    main()
+    populate()
