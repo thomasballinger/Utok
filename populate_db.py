@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+"""Wipes, populates the database as we might expect to find it."""
 import redis
 import utok.game as game
 import utok.mapreader as mapreader
