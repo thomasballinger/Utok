@@ -1,13 +1,8 @@
 #!/usr/bin/env python
 
 import redis
-<<<<<<< HEAD:populate_db.py
 import utok.game as game
 import utok.mapreader as mapreader
-=======
-from utok import game
-from utok import mapreader
->>>>>>> move_db_stuff:populate_db.py
 import cPickle as pickle
 from random import choice
 import sys
