@@ -34,3 +34,9 @@ class GameEntry():
             if not r.sismember('users', player):
                 r.sadd('users', player)
             r.sadd('users:'+player, self.game_id)
+
+def get_gameObjs(player=None):
+    if player:
+        raise NotImplemented()
+    else:
+        return [GameEntry(game_id) for game_id in r.smembers('games')]
