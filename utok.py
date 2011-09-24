@@ -18,7 +18,6 @@ from models import get_gameObjs
 app = Flask(__name__)
 app.config['DEBUG'] = True
 app.config['SECRET_KEY'] = 'development key'
-print [l for l in locals().keys() if 'game' in l]
 
 @app.route('/', methods=['GET'])
 def dashboard():
