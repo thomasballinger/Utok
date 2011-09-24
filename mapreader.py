@@ -17,8 +17,8 @@ def create_game(players, mapfile):
 
     mode = 'comment'
     for line in lines:
-        print 'was interpreted in mode',mode
-        print line
+        #print 'was interpreted in mode',mode
+        #print line
         if line.find('<end')!=-1:
             mode = 'comment'
             continue
@@ -73,12 +73,12 @@ def create_game(players, mapfile):
     countries = list(nodeNetwork)
     shuffle(countries)
 
-    print 'starting new map with these characteristics:'
-    print 'nodeNetwork',nodeNetwork
-    print 'bonuses',bonusesList
-    print 'players',players
-    print 'map'
-    print mapString
+    #print 'starting new map with these characteristics:'
+    #print 'nodeNetwork',nodeNetwork
+    #print 'bonuses',bonusesList
+    #print 'players',players
+    #print 'map'
+    #print mapString
 
     for bonus in bonusesList:
         for country in bonus[0:-1]:
@@ -88,7 +88,7 @@ def create_game(players, mapfile):
                 sys.exit()
 
     g = game.Game(nodeNetwork, players, bonusesList, mapString, coordinatesMap, mapFile, settingsMap)
-    print 'finished making game!'
+    #print 'finished making game!'
     rules = g.rules
     i = 0
     for country in countries:
@@ -98,7 +98,8 @@ def create_game(players, mapfile):
             if toAdd > 0:
                 rules.addUnits(country,toAdd)
         i+=1
-    print 'turn order:',players
+    #print 'turn order:',players
+    g._giveReinforcements()
     return g
 
 if __name__ == '__main__':

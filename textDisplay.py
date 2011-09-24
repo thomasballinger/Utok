@@ -16,7 +16,7 @@ class Display:
             self.origString = mapString
         self.parent = parentObject
 
-    def show(self):
+    def get(self):
         newString = self.origString
         countryStates = self.parent.getStates()
         countries = countryStates.keys()
@@ -35,8 +35,12 @@ class Display:
                 state = ['N/A',0]
 
             newString = newString[0:dataFind]+state[0][0:3]+' '*(3-len(str(state[1])))+str(state[1])+' '*(len(country)-6)+newString[dataFind+max(len(country),6):len(newString)]
+        return newString
+
+    def show(self):
+        s = self.get()
         print '\n\n\n\n\n'
-        print newString
+        print s
 
 class FakeParent:
     def __init__(self):
