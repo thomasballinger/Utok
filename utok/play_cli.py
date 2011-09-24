@@ -90,8 +90,6 @@ class RiskCmd(cmd.Cmd):
                     and text.lower() in x.lower()]
             return a
 
-
-
     def complete_reinforce(self, text, line, beginindex, endindex):
         user = self.game.whosTurn
         if not text:
@@ -106,6 +104,11 @@ class RiskCmd(cmd.Cmd):
 
 def load_game(g):
     RiskCmd(g).cmdloop()
+
+def run_command_on_game(g, cmd):
+    i = RiskCmd(g)
+    i.onecmd(cmd)
+    return g
 
 if __name__ == '__main__':
     g = mapreader.create_game(['herp', 'derp'],

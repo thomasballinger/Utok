@@ -16,7 +16,7 @@ class GameEntry():
         self.pickle_key = 'game:'+self.game_id+':pickle'
         self.players_key = 'game:'+self.game_id+':players'
         self.name_key = 'game:'+self.game_id+':name'
-        self.game_link = '/game/'+self.game_id
+        self.game_link = '/game/text/'+self.game_id
 
     def get_name(self):
         self.name = r.get(self.name_key)
@@ -42,9 +42,11 @@ class GameEntry():
                 r.sadd('users', player)
             r.sadd('users:'+player, self.game_id)
 
-def get_gameObjs(player=None):
+def get_gameObjs(player=None, name=None):
+    if name:
+        raise NotImplemented()
     if player:
+        ids = r.smembers('')
         raise NotImplemented()
     else:
-        print [GameEntry(game_id) for game_id in r.smembers('games')]
         return [GameEntry(game_id) for game_id in r.smembers('games')]
