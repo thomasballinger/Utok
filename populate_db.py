@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 
 import redis
-import utok.game as game
-import utok.mapreader as mapreader
+from utok import game
+from utok import mapreader
 import cPickle as pickle
 from random import choice
 import sys
+import os
 
 r = redis.Redis()
 
@@ -27,8 +28,7 @@ def add_game(name, users, mapfile):
         r.sadd('users:'+user, game_pickle_key)
     return True
 
-
-if __name__ == '__main__':
+def populate():
     r.flushdb()
     r.set('gamecounter', 0)
     all_users = ['tomb', 'alex', 'ryan', 'mai-anh', 'paula', 'tali']
@@ -38,3 +38,6 @@ if __name__ == '__main__':
         print name
         print users
         add_game(name, users, 'utok/worldmap.txt')
+
+if __name__ == '__main__':
+    main()

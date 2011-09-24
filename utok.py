@@ -12,7 +12,7 @@ from flask import abort
 from flask import render_template
 from flask import flash
 from utok import textDisplay
-from utok import game
+from utok import game 
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
@@ -45,4 +45,6 @@ def gamelist():
     game_ids = str(r.smembers('games'))
 
 if __name__ == '__main__':
+    import populate_db
+    populate_db.populate()
     app.run()
