@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+import pprint
+import redis
+import cPickle as pickle
 from flask import Flask
 from flask import request
 from flask import session
@@ -8,14 +11,13 @@ from flask import url_for
 from flask import abort
 from flask import render_template
 from flask import flash
-import redis
-import pprint
-import game
-import textDisplay
-import cPickle as pickle
+from utok import textDisplay
+from utok import game
+
 app = Flask(__name__)
 app.config['DEBUG'] = True
 app.config['SECRET_KEY'] = 'development key'
+
 r = redis.Redis()
 
 @app.route('/', methods=['GET'])
@@ -32,9 +34,10 @@ def dashboard():
     return render_template('dashboard.html', strings=games)
 
 @app.route('/game/<int:game_id>/')
-def game(game_id):
-    game = pickle.loads(str(r.get('game:'+str(game_id)+':pickle')))
-    d = textDisplay.Display(game)
+def display_game(game_id):
+    pickle_obj = str(r.get('game:'+str(game_id)+':pickle'))
+    g = pickle.loads(pickle_obj)
+    d = textDisplay.Display(g)
     s = d.get()
     return '<pre>' + s + '</pre>'
 
