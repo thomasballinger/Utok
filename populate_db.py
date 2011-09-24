@@ -30,8 +30,6 @@ def populate():
         name = "".join([syl() for i in range(randint(1, 5))]).title()
         shuffle(all_users)
         users = all_users[:randint(2,5)]
-        print users
-        print name
         add_game(name, users, 'utok/worldmap.txt')
 
 if __name__ == '__main__':
