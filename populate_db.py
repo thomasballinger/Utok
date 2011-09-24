@@ -21,18 +21,20 @@ def add_game(name, users, mapfile):
     r.sadd('games', game_id)
     for user in users:
         if not r.sismember('users', user):
-            print 'user DNE, creating'
+            print r.smembers('users')
+            print 'user',user,'DNE, creating'
             r.sadd('users', user)
         r.sadd('users:'+user, game_pickle_key)
-        return False
     return True
 
 
 if __name__ == '__main__':
     r.flushdb()
     r.set('gamecounter', 0)
-    users = ['tomb', 'alex', 'ryan', 'mai-anh', 'paula', 'tali']
+    all_users = ['tomb', 'alex', 'ryan', 'mai-anh', 'paula', 'tali']
     for i in range(10):
         name = "".join([choice('asdf;lkjghzxc.v,mnbpoqweorityu') for i in range(10)])
-        users = [choice(users) for i in range(2)]
+        users = [choice(all_users) for i in range(3)]
+        print name
+        print users
         add_game(name, users, 'utok/worldmap.txt')
