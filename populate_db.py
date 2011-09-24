@@ -8,7 +8,18 @@ import game
 import mapreader
 import textDisplay
 import sys
+import os
 import cmd
+
+def start_redis_if_not_on():
+    r = redis.Redis()
+    try:
+        r.get('adsf')
+    except redis.ConnectionError:
+        os.chdir(os.path.dirname(os.path.realpath(__file__)))
+        os.system('./redis-2.2.14/src/redis-server &')
+start_redis_if_not_on()
+
 r = redis.Redis()
 
 def add_game(name, users, mapfile):
@@ -133,7 +144,7 @@ def load_game(gamekey):
     RiskCmd(g).cmdloop()
 
 def main():
-    r.flush()
+    r.flushdb()
     r.set('gamecounter', 0)
     allusers = ['tomb', 'alex', 'ryan', 'mai-anh', 'paula', 'tali']
     for i in range(10):

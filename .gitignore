@@ -1,4 +1,6 @@
 # yay gitignore #
 *.pyc
 *.swp
+dump.rdb
+redis-*
 
