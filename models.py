@@ -16,17 +16,24 @@ class GameEntry():
         self.pickle_key = 'game:'+self.game_id+':pickle'
         self.players_key = 'game:'+self.game_id+':players'
         self.name_key = 'game:'+self.game_id+':name'
+        self.game_link = '/game/'+self.game_id
 
     def get_name(self):
-        return r.get(self.name_key)
+        self.name = r.get(self.name_key)
+        return self.name
 
     def get_game(self):
-        return pickle.loads(r.get(self.pickle_key))
+        self.game = pickle.loads(r.get(self.pickle_key))
+        return self.game
 
     def get_players(self):
-        return r.smembers(self.players_key)
+        self.players = r.smembers(self.players_key)
+        return self.players
 
     def set_name_game_players(self, name, game, players):
+        self.name = name
+        self.game = game
+        self.players = players
         r.set(self.name_key, name)
         r.set(self.pickle_key, pickle.dumps(game))
         for player in players:
@@ -39,4 +46,5 @@ def get_gameObjs(player=None):
     if player:
         raise NotImplemented()
     else:
+        print [GameEntry(game_id) for game_id in r.smembers('games')]
         return [GameEntry(game_id) for game_id in r.smembers('games')]

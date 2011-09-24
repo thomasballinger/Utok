@@ -21,12 +21,14 @@ app.config['SECRET_KEY'] = 'development key'
 
 @app.route('/', methods=['GET'])
 def dashboard():
-    gameObjs = get_gameObjs()
-    game_players = [gameObj.get_players() for gameObj in gameObjs]
-    game_names = [gameObj.get_name() for gameObj in gameObjs]
+    gameEntries = get_gameObjs()
+    game_players = [gameEntry.get_players() for gameEntry in gameEntries]
+    game_names = [gameEntry.get_name() for gameEntry in gameEntries]
     games = [game_names[i]+':'+str(game_players[i]) for i in range(len(game_players))]
-    strings = games
-    return render_template('dashboard.html', strings=games)
+    print games
+    print gameEntries
+    print dir(gameEntries[0])
+    return render_template('allgames.html', gameEntries=gameEntries)
 
 @app.route('/game/<int:game_id>/')
 def display_game(game_id):
