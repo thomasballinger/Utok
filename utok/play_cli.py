@@ -1,12 +1,10 @@
 #!/usr/bin/env python
+import os
 
 import game
 import textDisplay
-import redis
-import cPickle as pickle
 import cmd
-
-r = redis.Redis()
+import mapreader
 
 class RiskCmd(cmd.Cmd):
 
@@ -106,11 +104,10 @@ class RiskCmd(cmd.Cmd):
                     and text.lower() in x.lower()]
             return a
 
-
-
-def load_game(gamekey):
-    g = pickle.loads(str(r.get(gamekey)))
+def load_game(g):
     RiskCmd(g).cmdloop()
 
 if __name__ == '__main__':
-    load_game('game:2:pickle')
+    g = mapreader.create_game(['herp', 'derp'],
+            os.path.dirname(os.path.realpath(__file__))+'/worldmap.txt')
+    load_game(g)

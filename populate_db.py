@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 
 import redis
-import game
-import mapreader
+import utok.game as game
+import utok.mapreader as mapreader
 import cPickle as pickle
 from random import choice
-import game
 import sys
 
 r = redis.Redis()
@@ -36,4 +35,4 @@ if __name__ == '__main__':
     for i in range(10):
         name = "".join([choice('asdf;lkjghzxc.v,mnbpoqweorityu') for i in range(10)])
         users = [choice(users) for i in range(2)]
-        add_game(name, users, 'worldmap.txt')
+        add_game(name, users, 'utok/worldmap.txt')
