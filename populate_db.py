@@ -4,7 +4,7 @@ import redis
 import utok.game as game
 import utok.mapreader as mapreader
 import cPickle as pickle
-from random import choice
+from random import choice, randint, shuffle
 import sys
 import os
 from models import GameEntry
@@ -22,8 +22,16 @@ def populate():
     r.set('gamecounter', 0)
     all_users = ['tomb', 'alex', 'ryan', 'mai-anh', 'paula', 'tali']
     for i in range(10):
-        name = "".join([choice('asdf;lkjghzxc.v,mnbpoqweorityu') for i in range(10)])
-        users = [choice(all_users) for i in range(3)]
+        vowels = 'aeiouy'
+        consonants = 'bcdfghjklmnpqrstvwxz'
+        def syl():
+            case = randint(0, 2)
+            return (choice(consonants) if case else '') + choice(vowels) + (choice(consonants) if (case - 1) else '')
+        name = "".join([syl() for i in range(randint(1, 5))]).title()
+        shuffle(all_users)
+        users = all_users[:randint(2,5)]
+        print users
+        print name
         add_game(name, users, 'utok/worldmap.txt')
 
 if __name__ == '__main__':
