@@ -23,16 +23,15 @@ r = redis.Redis()
 
 @app.route('/', methods=['GET'])
 def dashboard():
-    gameObjs = [GameEntry(x) for x in r.smembers('games')]
-    game_players = [gameObj.get_players() for gameObj in gameObjs]
-    game_names = [gameObj.get_name() for gameObj in gameObjs]
-    games = [game_names[i]+':'+str(game_players[i]) for i in range(len(game_players))]
-    strings = games
-    return render_template('dashboard.html', strings=games)
+    gameEntries = [GameEntry(x) for x in r.smembers('game_entries')]
+    players = [gameEntry.players() for gameEntry in gameEntries]
+    names = [gameEntry.name() for gameEntry in gameEntries]
+    games = [names[i]+':'+str(players[i]) for i in range(len(players))]
+    return render_template('dashboard.html', strings=names)
 
 @app.route('/game/<int:game_id>/')
 def display_game(game_id):
-    g = GameEntry(game_id).get_game()
+    g = GameEntry(game_id).game()
     d = textDisplay.Display(g)
     s = d.get()
     return '<pre>' + s + '</pre>'
