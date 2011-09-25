@@ -13,32 +13,37 @@ from flask import flash
 from utok import textDisplay
 from utok import game
 from utok import play_cli
-from models import GameEntry
-from models import get_gameEntries
+import models
 
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
 app.config['SECRET_KEY'] = 'development key'
 
-@app.route('/', methods=['GET'])
-def dashboard():
-    #gameEntries = [GameEntry(x) for x in r.smembers('game_entries')]
-    #players = [gameEntry.players() for gameEntry in gameEntries]
-    #names = [gameEntry.name() for gameEntry in gameEntries]
-    #games = [names[i]+':'+str(players[i]) for i in range(len(players))]
-    #return render_template('dashboard.html', strings=names)
-    gameEntries = get_gameEntries()
+@app.route('/')
+def frontpage():
+    gameEntries = models.get_gameEntries()
+    players = models.get_players()
+    return render_template('frontpage.html', gameEntries=gameEntries, players=players)
+
+@app.route('/games/')
+def allgames():
+    gameEntries = models.get_gameEntries()
     return render_template('allgames.html', gameEntries=gameEntries)
+
+@app.route('/player/<player>/games/')
+def player_games(player):
+    gameEntries = models.get_gameEntries(player=player)
+    return render_template('playergames.html', gameEntries=gameEntries, player=player)
 
 @app.route('/game/text/<int:game_id>/', methods=['GET', 'POST'])
 def display_game(game_id):
-    g = GameEntry(game_id).game
+    g = models.GameEntry(game_id).game
 
     if request.method == 'POST':
         cmd = request.form['cmd']
         g = play_cli.run_command_on_game(g, cmd)
-        GameEntry(game_id).update_game(g)
+        models.GameEntry(game_id).update_game(g)
     else:
         cmd = None
 

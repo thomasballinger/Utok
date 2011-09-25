@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<h1>
+	Utak!!!
+</h1>
+<h2>
+	Games
+</h2>
+{% for game in gameEntries %}
+<h4>
+	<a href="{{game.game_link}}">{{game.name}}</a>
+</h4>
+<p>
+players:
+{{game.players}}
+</p>
+{% endfor %}
+
+{% endblock %}

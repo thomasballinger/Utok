@@ -46,10 +46,15 @@ class GameEntry():
     def update_game(self, game):
         r.hset(self.key, 'pickle', pickle.dumps(game))
 
+def get_players():
+    return []
+
 def get_gameEntries(player=None):
     if player:
         ids = r.smembers('')
-        raise NotImplemented()
+        gameEntries =  [GameEntry(gid) for gid in r.smembers('game_entries')]
+        return [gameEntry for gameEntry in gameEntries
+                if player in gameEntry.players]
     else:
         print [GameEntry(gid) for gid in r.smembers('game_entries')]
         return [GameEntry(gid) for gid in r.smembers('game_entries')]
