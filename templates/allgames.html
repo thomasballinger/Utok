@@ -1,6 +1,10 @@
 {% extends 'layout.html' %}
+
 {% block body %}
 
+<h1>
+All Games
+</h1>
 {% for game in gameEntries %}
 <h4>
 	<a href="{{game.game_link}}">{{game.name}}</a>
