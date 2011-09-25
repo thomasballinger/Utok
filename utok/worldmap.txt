@@ -12,7 +12,7 @@ Countries can't have numbers or punctuation, and must be one word!
 USA Canada Mexico
 Canada Alaska USA
 Mexico Cuba England USA
-Cuba USA
+Cuba Mexico
 England Iceland Mexico
 Iceland Greenland England
 Greenland Iceland Canada

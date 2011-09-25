@@ -9,12 +9,11 @@
 	Games
 </h2>
 {% for game in gameEntries %}
-<h4>
-	<a href="{{game.game_link}}">{{game.name}}</a>
-</h4>
 <p>
-players:
-{{game.players}}
+	<a href="{{game.game_link}}">{{game.name}}</a>
+	{% for player in game.players %}
+	<a href="/player/{{player}}/games">{{player}}</a>
+			{% endfor %}
 </p>
 {% endfor %}
 

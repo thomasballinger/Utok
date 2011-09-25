@@ -23,7 +23,7 @@ def populate():
     all_users = ['tomb', 'alex', 'ryan', 'mai-anh', 'paula', 'tali']
     for i in range(10):
         vowels = 'aeiouy'
-        consonants = 'bcdfghjklmnpqrstvwxz'
+        consonants = list('bbcdffghjklmmnnpqrrsssttvwxz') + ['th', 'sh', 'ch', ]
         def syl():
             case = randint(0, 2)
             return (choice(consonants) if case else '') + choice(vowels) + (choice(consonants) if (case - 1) else '')
