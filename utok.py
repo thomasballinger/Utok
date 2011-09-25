@@ -33,7 +33,7 @@ def dashboard():
 
 @app.route('/game/text/<int:game_id>/', methods=['GET', 'POST'])
 def display_game(game_id):
-    g = GameEntry(game_id).game()
+    g = GameEntry(game_id).game
 
     if request.method == 'POST':
         cmd = request.form['cmd']
