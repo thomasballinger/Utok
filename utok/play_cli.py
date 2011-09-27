@@ -29,7 +29,7 @@ class RiskCmd(cmd.Cmd):
         except:
             print 'reinforce country num'
             return
-        print self.game.reinforce(country, num, user)
+        print self.game.player_reinforce(country, num, user)
 
     def do_attack(self, args):
         user = self.game.whosTurn
@@ -39,7 +39,7 @@ class RiskCmd(cmd.Cmd):
         except:
             print 'attack origin dest num'
             return
-        print self.game.attack(origin, dest, num, user)
+        print self.game.player_attack(origin, dest, num, user)
 
     def do_freemove(self, args):
         user = self.game.whosTurn
@@ -49,7 +49,7 @@ class RiskCmd(cmd.Cmd):
         except:
             print 'freemove origin dest num'
             return
-        print self.game.freeMove(origin, dest, num, user)
+        print self.game.player_freeMove(origin, dest, num, user)
 
     def do_fortify(self, args):
         user = self.game.whosTurn
@@ -59,11 +59,11 @@ class RiskCmd(cmd.Cmd):
         except:
             print 'fortify origin dest num'
             return
-        print self.game.fortify(origin, dest, num, user)
+        print self.game.player_fortify(origin, dest, num, user)
 
     def do_pass(self, args):
         user = self.game.whosTurn
-        print self.game.skip(user)
+        print self.game.player_skip(user)
 
     def do_done(self, args):
         return True
@@ -71,21 +71,21 @@ class RiskCmd(cmd.Cmd):
     def complete_attack(self, text, line, beginindex, endindex):
         user = self.game.whosTurn
         if not text:
-            a = [x for x in self.game.getCountries()]
+            a = [x for x in self.game.countries]
             return a
         else:
-            a = [x for x in self.game.getCountries()
-                    and text.lower() in x.lower()]
+            a = [x for x in self.game.countries
+                    if text.lower() in x.lower()]
             return a
 
     def complete_fortify(self, text, line, beginindex, endindex):
         user = self.game.whosTurn
         if not text:
-            a = [x for x in self.game.getCountries()
+            a = [x for x in self.game.countries
                     if self.game.isOwned(x, user)]
             return a
         else:
-            a = [x for x in self.game.getCountries()
+            a = [x for x in self.game.countries
                     if self.game.isOwned(x, user)
                     and text.lower() in x.lower()]
             return a
@@ -93,11 +93,11 @@ class RiskCmd(cmd.Cmd):
     def complete_reinforce(self, text, line, beginindex, endindex):
         user = self.game.whosTurn
         if not text:
-            a = [x for x in self.game.getCountries()
+            a = [x for x in self.game.countries()
                     if self.game.isOwned(x, user)]
             return a
         else:
-            a = [x for x in self.game.getCountries()
+            a = [x for x in self.game.countries()
                     if self.game.isOwned(x, user)
                     and text.lower() in x.lower()]
             return a

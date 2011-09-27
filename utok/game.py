@@ -3,12 +3,12 @@ from rules import Rules
 class Game:
     """Represents the current state of a risk game
 
-    Includes full specification of the map, rules, players and current game state.  
+    Includes full specification of the map, rules, players and current game state.
     Includes the NAME ONLY of the graphical map file, along with coordinates of territories on this map."""
     def __init__(self,nodeNetwork=None, players={}, bonuses=[], mapString=None, coordinates=None, mapFile=None, settingsMap={}):
         self.mapFile = mapFile
         self.coordinates = coordinates
-        self.rules = Rules(map=nodeNetwork,players=players)
+        self.rules = Rules(map=nodeNetwork, players=players)
         self.whosTurn = self.rules.players[0]
         self.turnStage = 'reinforce'
         self.reinforcementsToPlace = {}
@@ -39,42 +39,25 @@ class Game:
             self.reinforced = True
             self.reinforcementsToPlace[self.whosTurn]=self.getDeservedReinforcements(self.whosTurn)
 
-    def getFortifiesLeft(self,player):
+    def player_getFortifiesLeft(self,player):
         """Returns 0 if not the current players turn, otherwise the number of fortifying moves left in the turn"""
         if self.whosTurn != player:
             return 0
         else:
             return self.fortifiesLeft
 
-    def getLastAttack(self,player):
-        if self.whosTurn != player:
-            return False
-        else:
-            return self.lastAttack
-
-    def getWhosTurn(self):
-        """Returns player string of whose turn it is"""
-        return self.whosTurn
-
-    def getTurnStage(self):
-        return self.turnStage
-
-    def getReinforcements(self,player):
-        """Returns the number of reinforcements the player has yet to place"""
-        return self.reinforcementsToPlace[player]
-
     def updateTurn(self):
-        if self.whosTurn not in self.getPlayersAlive() and self.turnStage != 'fortify': # lose condition
+        if self.whosTurn not in self.playersAlive and self.turnStage != 'fortify': # lose condition
             self.turnStage = 'fortify'
             self.fortifiesLeft = 0
             self.updateTurn()
-        if len(self.getPlayersAlive()) == 1 and self.getPlayersAlive()[0] == self.whosTurn:
+        if len(self.playersAlive) == 1 and self.playersAlive[0] == self.whosTurn:
             self.turnStage = 'reinforce'  # win condition
             self.reinforcementsToPlace[self.whosTurn] = 1
         elif self.turnStage == 'reinforce' and self.reinforcementsToPlace[self.whosTurn]==0:
                 self.turnStage = 'attacks'
-        elif (self.turnStage == 'fortify' and self.fortifiesLeft == 0) or self.whosTurn not in self.getPlayersAlive():
-            players = self.getPlayers()  # begin new turn
+        elif (self.turnStage == 'fortify' and self.fortifiesLeft == 0) or self.whosTurn not in self.playersAlive:
+            players = self.players  # begin new turn
             for i in range(len(players)):
                 if self.whosTurn == players[i]:
                     self.whosTurn = players[(i+1)%len(players)]
@@ -91,8 +74,8 @@ class Game:
         count = 0
         countriesPerTroop = 3
         if 'countriesPerTroop' in self.settingsMap:
-            countriesPerTroop = int(self.settingsMap['countriesPerTroop']) 
-        countries = self.getCountries()
+            countriesPerTroop = int(self.settingsMap['countriesPerTroop'])
+        countries = self.countries
         for country in countries:
             if self.isOwned(country, player):
                 count +=1
@@ -106,7 +89,7 @@ class Game:
         return max(int(count/countriesPerTroop),3)
 
 
-    def reinforce(self,country,howMany,player):
+    def player_reinforce(self,country,howMany,player):
         pass
         # check for correct turn, right time, have reinforcements, etc.
         if type(player) != type('string') and type(player) != type(u'string'):
@@ -119,7 +102,7 @@ class Game:
             return False
         if type(country) != type('string') and type(country) != type(u'string'):
             return False
-        if country not in self.getCountries():
+        if country not in self.countries:
             return False
         if not self.isOwned(country, player):
             return False
@@ -136,7 +119,7 @@ class Game:
         else:
             return False
 
-    def attack(self,fromCountry,toCountry,howMany,player):
+    def player_attack(self,fromCountry,toCountry,howMany,player):
         if self.whosTurn != player:
             #raise Exception, 'player error'
             return False
@@ -155,13 +138,13 @@ class Game:
         if type(howMany)!=type(1):
             #raise Exception, 'how many is not a number'
             return False
-        if not fromCountry in self.getCountries():
+        if not fromCountry in self.countries:
             #raise Exception, 'from country is not a country'
             return False
-        if not toCountry in self.getCountries():
+        if not toCountry in self.countries:
             #raise Exception, 'to country is not a country'
             return False
-        if not player in self.getPlayers():
+        if not player in self.players:
             #raise Exception, 'player is not in this game'
             return False
         if not self.isTouching(fromCountry, toCountry):
@@ -181,17 +164,16 @@ class Game:
             return False
         output = self.rules.attack(fromCountry,toCountry,howMany)
         if not output:
-            #raise Exception, 'rules.attack failed'
+            raise Exception, 'rules.attack failed'
             return False
         else:
             self.lastAttack = output
-            # FINISH PROCESSING ATTACK!  ? is there anythin left to do?
             self.updateTurn()
             self.showAttackResult = True
             self.justMadeFreeMove = False
             return output
 
-    def freeMove(self,fromCountry,toCountry,howMany,player):
+    def player_freeMove(self,fromCountry,toCountry,howMany,player):
         if type(player)!=type('string') and type(player) != type(u'string'):
             return False
         if self.whosTurn != player:
@@ -210,7 +192,7 @@ class Game:
             return False
         if toCountry != self.lastAttack['to']:
             return False
-        if not player in self.getPlayers():
+        if not player in self.players:
             return False
         if not self.isTouching(fromCountry, toCountry):
             return False
@@ -229,7 +211,7 @@ class Game:
             raise Exception, 'rules failed'
             return False
 
-    def fortify(self,fromCountry,toCountry,howMany,player):
+    def player_fortify(self,fromCountry,toCountry,howMany,player):
         if type(player)!=type('string') and type(player) != type(u'string'):
             return False
         if self.whosTurn != player:
@@ -260,7 +242,7 @@ class Game:
         else:
             return False
 
-    def skip(self, player):
+    def player_skip(self, player):
         if self.whosTurn != player:
             return False
         else:
@@ -281,7 +263,17 @@ class Game:
             else:
                 return False
 
-    def getCordinates(self, country):
+    def player_getLastAttack(self,player):
+        if self.whosTurn != player:
+            return False
+        else:
+            return self.lastAttack
+
+    def getReinforcements(self,player):
+        """Returns the number of reinforcements the player has yet to place"""
+        return self.reinforcementsToPlace[player]
+
+    def getCoordinates(self, country):
         return self.coordinates[country]
 
     def getAdjacentAttacks(self, country):
@@ -291,27 +283,6 @@ class Game:
             if self.getOwner(adjCountry) != player:
                 possibleAttacks.append(adjCountry)
         return possibleAttacks
-
-    def getFortifies(self):
-        return self.fortifies
-
-    def isCountry(self,country):
-        return country in self.getCountries()
-
-    def getCountries(self):
-        return self.rules.board.getCountries()
-
-    def getOwner(self, country):
-        return self.rules.getOwner(country)
-
-    def getTroops(self, country):
-        return self.rules.getTroops(country)
-
-    def getPlayers(self):
-        return self.rules.players
-
-    def getPlayersAlive(self):
-        return self.rules.getPlayersAlive()
 
     def getAdjacentCountries(self,country):
         return self.rules.getAdjacentCountries(country)
@@ -334,23 +305,33 @@ class Game:
     def allOwned(countryList, player):
         return self.rules.isOwned(country, player)
 
-    def getStates(self):
+    def isCountry(self,country):
+        return country in self.countries
+
+    def getOwner(self, country):
+        return self.rules.getOwner(country)
+
+    def getTroops(self, country):
+        return self.rules.getTroops(country)
+
+    def getFortifies(self):
+        return self.fortifies
+
+    @property
+    def countries(self):
+        return self.rules.board.getCountries()
+
+    @property
+    def players(self):
+        return self.rules.players
+
+    @property
+    def playersAlive(self):
+        return self.rules.getPlayersAlive()
+
+    @property
+    def states(self):
         return self.rules.board.getCountryStates()
-
-    def getTurn(self):
-        return self.whosTurn
-
-    def getStage(self):
-        return self.turnStage
-
-    def getMapString(self):
-        return self.mapString
-
-    def getCordinatesMap(self):
-        return self.coordinates
-
-    def getMapFile(self):
-        return self.mapFile
 
 # debugging tools
 mymap = {'USA':['Canada','Mexico'],'Canada':['USA','Greenland'],'Mexico':['USA','Cuba','England'],'Cuba':['Mexico'],'Greenland':['Canada','Iceland'],'Iceland':['England','Greenland'],'England':['Mexico','Iceland'],'Alaska':['Canada']}
@@ -372,24 +353,24 @@ def demo():
     print game.turnStage
     game.reinforcementsToPlace['tom'] = 3
     print 'reinforce usa with 3 for tom:',
-    print game.reinforce('USA', 3, 'tom')
+    print game.player_reinforce('USA', 3, 'tom')
     print 'attack mexico with 2 for tom:',
-    print game.attack('USA','Mexico', 2, 'tom')
+    print game.player_attack('USA','Mexico', 2, 'tom')
     print 'freemove from usa to mexico with 1 for tom:',
-    print game.freeMove('USA', 'Mexico', 1, 'tom')
+    print game.player_freeMove('USA', 'Mexico', 1, 'tom')
     print 'skip:',
-    print game.skip('tom')
+    print game.player_skip('tom')
     print 'fortify usa from canada with 1:',
-    print game.fortify('Canada','USA',1,'tom')
-    print 'reinforce cuba once',game.reinforce('Cuba',1,'alex')
-    print 'reinforce cuba twice',game.reinforce('Cuba',2,'alex')
+    print game.player_fortify('Canada','USA',1,'tom')
+    print 'reinforce cuba once',game.player_reinforce('Cuba',1,'alex')
+    print 'reinforce cuba twice',game.player_reinforce('Cuba',2,'alex')
     raw_input()
 
     print 'whosTurn',game.whosTurn
     print 'turnStage',game.turnStage
     print 'toReinforce',game.reinforcementsToPlace
 
-    print game.getStates()
+    print game.states
 
 if __name__=='__main__':
     demo()

@@ -33,10 +33,10 @@ class Board:
     def getConnections(self,country):
         if not country in self.nodeNetwork:
             print "country not found that you want the connections of"
-        else:   
+        else:
             connectionsList = []
             if not self.nodeNetwork[country]:
-                return connectionsList 
+                return connectionsList
             else:
                 for connection in self.nodeNetwork[country]:
                     if connection in self.countryStates:
@@ -50,8 +50,8 @@ class Board:
             print 'No Country by that name exists', country
             print 'existing countries:',self.countryStates
             return None
-        return self.countryStates[country] 
-    
+        return self.countryStates[country]
+
     def setCountryState(self,country,state):
         if country not in self.countryStates:
             print 'No Country by that name exists', country
@@ -87,7 +87,7 @@ if __name__ == '__main__':
     print game.getCountries()
     print game.getConnections("USA")
     game.bidirectionalize()
-    print game.getCountries()       
+    print game.getCountries()
     print game.getConnections("USA")
     print game.getCountryState("USA")
     print game.setCountryState("USA",['tom',12])

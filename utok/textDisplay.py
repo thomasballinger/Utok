@@ -18,7 +18,7 @@ class Display:
 
     def get(self):
         newString = self.origString
-        countryStates = self.parent.getStates()
+        countryStates = self.parent.states
         countries = countryStates.keys()
         for country in countries:
             firstFind = newString.find(country)
@@ -45,9 +45,7 @@ class Display:
 class FakeParent:
     def __init__(self):
         self.mapString = None
-    def getStates(self):
-        return {'USA':['Thomas',42],'England':['Thomas',42]}
-
+        self.states = {'USA':['Thomas',42],'England':['Thomas',42]}
 
 if __name__ == '__main__':
     fakeparent = FakeParent()
