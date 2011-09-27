@@ -1,11 +1,9 @@
 import game
 import sys
 from random import shuffle
-def create_game(players, mapfile):
+def create_game(players, mapstring):
 
-    file = open(mapfile)
-    lines = file.readlines()
-    giantString = "".join(lines)
+    giangString = mapstring
 
     bonusesList = []
     nodeNetwork = {}
@@ -103,4 +101,4 @@ def create_game(players, mapfile):
     return g
 
 if __name__ == '__main__':
-    create_game(['ryan', 'tomb'], './worldmap.txt')
+    create_game(['ryan', 'tomb'], open('data/worldmap.txt').read())

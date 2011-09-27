@@ -12,7 +12,8 @@ from models import GameEntry
 r = redis.Redis()
 
 def add_game(name, users, mapfile):
-    gObj = mapreader.create_game(users, mapfile)
+    mapstring = open(mapfile).read()
+    gObj = mapreader.create_game(users, mapstring)
     g = GameEntry()
     g.set_name_game_players(name, gObj, users)
     return True
@@ -30,7 +31,7 @@ def populate():
         name = "".join([syl() for i in range(randint(1, 5))]).title()
         shuffle(all_users)
         users = all_users[:randint(2,5)]
-        add_game(name, users, 'utok/worldmap.txt')
+        add_game(name, users, 'utok/data/worldmap.txt')
 
 if __name__ == '__main__':
     populate()

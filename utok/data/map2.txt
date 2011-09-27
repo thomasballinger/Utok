@@ -1,0 +1,68 @@
+office map by thomas ballinger
+pretty dumb map huh
+we can use it as a template for now
+ 
+note that connections are bidirectional; you don't actually have to
+ specify any connections from a country, as long as it has connections
+ to it.
+Don't misspell any countries!!!
+Countries can't have numbers or punctuation, and must be one word!
+
+<start-nodeNetwork>
+Rayna Israel Khalima Hallway2
+Israel Raynal Khalima Hallway2
+Khalima Rayna Israel Hallway2
+Hallway2 Rayna Israel Kalima Hallway1 Printer Doug Girls
+Printer Hallway2 Doug Girls Hallway1
+Doug More_girls Girls Printer Hallway1 Hallway2
+Girls Guys Doug Printer Hallway1 Hallway2
+More_girls Guys Doug
+Girls Guys Doug Printer Hallway1 Hallway2
+Guys More_girls Girls
+Hallway1 Printer Hallway2 Doug Girls Elevator Jorge Jason Tom Marty Marek Conf Sara
+Jorge Hallway1
+Jason Hallway1
+Tom Hallway1
+Marty Hallway1 Marek
+Marek Marty Hallway1
+Conf Hallway1
+Sara Hallway1
+Elevator Hallway1 CVS 2ndFloor
+CVS Elevator
+2ndFloor Elevator
+<end-nodeNetwork>
+
+This next section is optional, but it's so much better to have bonuses!
+<start-bonuses>
+Rayna Israel Khalima 2
+More_girls Guys Girls Doug 3
+Jorge Jason Tom 2
+Marty 2
+Marek 1
+Conf 1
+CVS 2ndFloor 2
+<end-bonuses>
+
+<42> pnl_d4_8 /home/tomb % 12345678901234567890123456789012345678901234567890000 
+this is the width of a standard terminal (it's ok to go beyond that,
+ but andrew doesn't like it)
+<start-map>
+                                                                              
+ +2 for | 3    +3 for holding the RA pen    Reinforcements = 1 per            
+        V       _______________________     every 2 countries,       +2 for   
+ Rayna......    |              Guys   |     plus bonuses, min 3       marty   
+ Rayna*    :    | More_girls...Guys** |                               _______ 
+           :    | More_girls    :     |  +2 for holding these 3    | ..Marty |
+ Israel....:    |   :           :     |____________________________| : Marty*|
+ Israel    :    | Doug.........Girls  |  Jorge  |  Jason  |  Tom   | :|______|
+           :    | Doug**   :   Girls* |  Jorge* |  Jason* | Tom*** | : +1 for|
+ Khalima...:    |_______   :   _______|______ : |___ :  __|____ :  |.:.Marek |
+ Khalima   :    |Printer...:............Hallway1..   :          :   :  Marek*|
+      .....:    |Printer   :      ......Hallway1  this.is.all.hallway1_______|
+      :         |_____     :      : _________________________   :   :...     |
+      :.....Hallway2.......:      :.....                        :      Conf  |
+ +2 for     Hallway2                   :            ________    :   | Conf** |
+  both lower floors    2ndFloor.......Elevator     |  Sara  |   :   | +1 for |
+  CVS......            2ndFloor  .....Elevator     |  Sara**....:   |  conf  |
+ CVS***   :......................:_________________|________________|________|
+<end-map> 
