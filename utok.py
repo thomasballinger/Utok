@@ -37,7 +37,8 @@ def player_games(player):
     return render_template('playergames.html', gameEntries=gameEntries, player=player)
 
 @app.route('/game/text/<int:game_id>/', methods=['GET', 'POST'])
-def display_game(game_id):
+def display_game_text(game_id):
+    """View and play a risk game in text mode"""
     g = models.GameEntry(game_id).game
 
     if request.method == 'POST':
@@ -49,10 +50,24 @@ def display_game(game_id):
 
     d = textDisplay.Display(g)
     s = d.get()
-    return '<pre>' + (cmd+'\n' if cmd else '') + g.getWhosTurn() + '\n' + g.getTurnStage() + '\n' + s + '\n' + "Ex:\nreinforce Canada 3\nattack Canada USA 3\nfreemove Canada USA 1\nfortify Canada Greenland 1" + '\n' '</pre>'+ """<form action="/game/text/"""+str(game_id)+"""/" method="post">
-  Command: <input type="text" name="cmd" /><br />
-      <input type="submit" value="Submit" />
-      </form>"""
+    response = ('<pre>' +
+            ('last command:' + cmd+'\n' if cmd else '') +
+            g.getWhosTurn() + '\n' +
+            g.getTurnStage() + '\n' +
+            ('left to reinforce: '+str(g.reinforcementsToPlace[g.whosTurn])+'\n'
+                if g.getTurnStage() == 'reinforce' else '' ) +
+            s + '\n' + """Ex:
+    reinforce Canada 3
+    attack Canada USA 3
+    pass (means done with stage)
+    freemove Canada USA 1
+    fortify Canada Greenland 1""" +
+            '\n' '</pre>' +
+            """<form action="/game/text/"""+str(game_id)+"""/" method="post">
+              Command: <input type="text" name="cmd" /><br />
+              <input type="submit" value="Submit" />
+              </form>""")
+    return response
 
 if __name__ == '__main__':
     import populate_db
