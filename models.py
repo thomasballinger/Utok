@@ -15,7 +15,7 @@ class GameEntry():
             r.sadd('game_entries', self.gid)
         else:
             self.gid = str(gid)
-            self.game_link = '/game/text/' + str(gid)
+            self.game_link = '/game/' + str(gid) + '/text'
 
     @property
     def name(self):

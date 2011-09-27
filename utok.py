@@ -36,7 +36,7 @@ def player_games(player):
     gameEntries = models.get_gameEntries(player=player)
     return render_template('playergames.html', gameEntries=gameEntries, player=player)
 
-@app.route('/game/text/<int:game_id>/', methods=['GET', 'POST'])
+@app.route('/game/<int:game_id>/text', methods=['GET', 'POST'])
 def display_game_text(game_id):
     """View and play a risk game in text mode"""
     gameEntry = models.GameEntry(game_id)
@@ -52,6 +52,20 @@ def display_game_text(game_id):
     d = textDisplay.Display(g)
     s = d.get()
     return render_template('textgame.html', gameEntry=gameEntry, game=g, command=cmd, gamestring=s)
+
+@app.route('/game/<int:game_id>/cmd/<path:command>')
+def input_command(game_id, command):
+    words = command.split('/')
+
+    gameEntry = models.GameEntry(game_id)
+    g = gameEntry.game
+    g = play_cli.run_command_on_game(g, ' '.join(words))
+    gameEntry.update_game(g)
+
+    d = textDisplay.Display(g)
+    s = d.get()
+    return render_template('textgame.html', gameEntry=gameEntry, game=g, command=' '.join(words), gamestring=s)
+
 
 @app.route('/game/graphics/<int:game_id>/')
 def display_game_graphics(game_id):
