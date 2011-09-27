@@ -39,7 +39,8 @@ def player_games(player):
 @app.route('/game/text/<int:game_id>/', methods=['GET', 'POST'])
 def display_game_text(game_id):
     """View and play a risk game in text mode"""
-    g = models.GameEntry(game_id).game
+    gameEntry = models.GameEntry(game_id)
+    g = gameEntry.game
 
     if request.method == 'POST':
         cmd = request.form['cmd']
@@ -50,24 +51,11 @@ def display_game_text(game_id):
 
     d = textDisplay.Display(g)
     s = d.get()
-    response = ('<pre>' +
-            ('last command:' + cmd+'\n' if cmd else '') +
-            g.getWhosTurn() + '\n' +
-            g.getTurnStage() + '\n' +
-            ('left to reinforce: '+str(g.reinforcementsToPlace[g.whosTurn])+'\n'
-                if g.getTurnStage() == 'reinforce' else '' ) +
-            s + '\n' + """Ex:
-    reinforce Canada 3
-    attack Canada USA 3
-    pass (means done with stage)
-    freemove Canada USA 1
-    fortify Canada Greenland 1""" +
-            '\n' '</pre>' +
-            """<form action="/game/text/"""+str(game_id)+"""/" method="post">
-              Command: <input type="text" name="cmd" /><br />
-              <input type="submit" value="Submit" />
-              </form>""")
-    return response
+    return render_template('textgame.html', gameEntry=gameEntry, game=g, command=cmd, gamestring=s)
+
+@app.route('/game/graphics/<int:game_id>/')
+def display_game_graphics(game_id):
+    pass
 
 if __name__ == '__main__':
     import populate_db

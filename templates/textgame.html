@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+  <title>long live ascii!</title>
+  <style type="text/css">
+	  body{
+		  color: white;
+		  background: black;
+		  padding-left: 0em;
+	  }
+  </style>
+</head>
+<body>
+  <div class=textgame>
+	<pre>
+  {% if command %}
+  last command: {{command}}
+  {% endif %}
+  current turn: {{game.whosTurn}}
+  turn stage: {{game.turnStage}}
+  {% if game.turnStage == 'reinforce' %}	
+  left to reinforce: {{game.reinforcementsToPlace[game.whosTurn]}}
+  {% endif %}
+  {{gamestring}}
+
+</pre>
+
+	<form action="/game/text/{{gameEntry.gid}}/" method="post"> 
+		Command: 
+		<input type="text" name="cmd" /><br/>
+		<input type="submit" value="Submit" />
+	</form>
+<pre>
+  Example Commands
+    reinforce Canada 3
+    attack Canada USA 3
+    pass (means done with stage)
+    freemove Canada USA 1
+    fortify Canada Greenland 1
+</pre>
+
+</div>
+
+</body>
+</html>
