@@ -46,6 +46,31 @@ class GameEntry():
     def update_game(self, game):
         r.hset(self.key, 'pickle', pickle.dumps(game))
 
+class MapEntry():
+    def __init__(self, map_id=None):
+        if map_id:
+            self.map_id = str(map_id)
+            self.map_link = '/map/text/' + str(map_id)
+        else:
+            self.map_id = str(r.incr('ids:map_entry'))
+            r.sadd('map_entries', self.map_id)
+
+    @property
+    def key(self):
+        return 'map_entry:'+self.map_id
+
+    def set_string_and_name(self, string, name):
+        r.hset(self.key, 'string', string)
+        r.hset(self.key, 'name', name)
+
+    @property
+    def string(self):
+        return r.hget(self.key, 'string')
+
+    @property
+    def name(self):
+        return r.hget(self.key, 'name')
+
 def get_players():
     return []
 

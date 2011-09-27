@@ -4,6 +4,7 @@
 #  USA    ->  USA
 #  USA*** ->  tom 17
 #
+import re
 
 class Display:
     def __init__(self,parentObject,mapString=None,mapImage=None):
@@ -11,7 +12,7 @@ class Display:
             mapString = parentObject.mapString
 
         if not mapString:
-            self.origString = "".join(open('worldmap.txt').readlines())
+            self.origString = "".join(open('data/worldmap.txt').readlines()[32:])
         else:
             self.origString = mapString
         self.parent = parentObject
@@ -22,13 +23,20 @@ class Display:
         countries = countryStates.keys()
         for country in countries:
             firstFind = newString.find(country)
-            if firstFind == -1:
+            m = re.search(r'[^\d]'+country+r'[^\d]', newString)
+            try:
+                firstFind = m.start()+1
+            except:
                 print country,'not found in map'
                 return False
             dataFind = newString.find(country,firstFind+6)
-            if dataFind == -1:
-                print country,'not found in map second time'
-                return False
+            m = re.search(r'[^\d]'+country+r'[^\d]', newString[(firstFind+6):])
+            try:
+                dataFind = m.start() + 1 + firstFind + 6
+            except:
+                print "'"+country+"'",'not found in map second time'
+                print 'first find was at', firstFind
+                return newString
             if countryStates[country][0]:
                 state = countryStates[country]
             else:
@@ -48,7 +56,11 @@ class FakeParent:
         self.states = {'USA':['Thomas',42],'England':['Thomas',42]}
 
 if __name__ == '__main__':
-    fakeparent = FakeParent()
-    x=Display(fakeparent)
+    #fakeparent = FakeParent()
+    #x=Display(fakeparent)
     #print x.origString
-    x.show()
+    #x.show()
+    import game
+    import mapreader
+    d = Display(mapreader.create_game(['Apple', "Banana"], open('data/map4labels.txt').read()))
+    d.show()

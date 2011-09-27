@@ -35,7 +35,7 @@ this is the width of a standard terminal (it's ok to go beyond that,
    /       /   \__/      \  Canada             \__________________/           
   /   ____/ Canada       /                                       :            
  |___/   /______________/___ ___    +1 for Alaska                :_______     
-        /                       /     and USA          Iceland   /      /     
+        /                       /     and U.S.A.       Iceland   /      /     
        /                       /                       Iceland  /      /..... 
       |                       /  +4 bonus for                   \_____/     / 
       |       USA            /    these four        +2 bonus for           /  

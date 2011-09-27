@@ -2,6 +2,8 @@ import game
 import sys
 from random import shuffle
 def create_game(players, mapstring):
+    if not mapstring:
+        print 'no mapstring found'
 
     lines = [line+'\n' for line in mapstring.split('\n')]
 

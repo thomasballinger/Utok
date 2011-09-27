@@ -74,4 +74,4 @@ def display_game_graphics(game_id):
 if __name__ == '__main__':
     import populate_db
     populate_db.populate()
-    app.run()
+    app.run('0.0.0.0')
