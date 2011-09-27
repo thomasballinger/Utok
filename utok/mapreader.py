@@ -3,7 +3,7 @@ import sys
 from random import shuffle
 def create_game(players, mapstring):
 
-    lines = mapstring.split('\n')
+    lines = [line+'\n' for line in mapstring.split('\n')]
 
     bonusesList = []
     nodeNetwork = {}
