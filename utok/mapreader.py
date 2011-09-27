@@ -1,11 +1,9 @@
 import game
 import sys
 from random import shuffle
-def create_game(players, mapfile):
+def create_game(players, mapstring):
 
-    file = open(mapfile)
-    lines = file.readlines()
-    giantString = "".join(lines)
+    lines = mapstring.split('\n')
 
     bonusesList = []
     nodeNetwork = {}
@@ -19,25 +17,25 @@ def create_game(players, mapfile):
     for line in lines:
         #print 'was interpreted in mode',mode
         #print line
-        if line.find('<end')!=-1:
+        if '<end' in line:
             mode = 'comment'
             continue
-        if line.find('<start-map>')!=-1:
+        if '<start-map>' in line:
             mode = 'map'
             continue
-        if line.find('<start-nodeNetwork>')!=-1:
+        if '<start-nodeNetwork>' in line:
             mode = 'network'
             continue
-        if line.find('<start-bonuses>')!=-1:
+        if '<start-bonuses>' in line:
             mode = 'bonus'
             continue
-        if line.find('<start-coordinates>')!=-1:
+        if '<start-coordinates>' in line:
             mode = 'coordinates'
             continue
-        if line.find('<start-mapFile>')!=-1:
+        if '<start-mapFile>' in line:
             mode = 'mapFile'
             continue
-        if line.find('<start-settings>')!=-1:
+        if '<start-settings>' in line:
             mode = 'settings'
             continue
         if mode == 'settings':
@@ -103,4 +101,4 @@ def create_game(players, mapfile):
     return g
 
 if __name__ == '__main__':
-    create_game(['ryan', 'tomb'], './worldmap.txt')
+    create_game(['ryan', 'tomb'], open('data/worldmap.txt').read())
