@@ -1,15 +1,12 @@
 """Everything to do with representing data in the database"""
 import redis
 import os
+import re
 import cPickle as pickle
 from utok import game
+import database
 
-redistogo = os.environ.get('REDISTOGO_URL', None)
-if redistogo:  # Heroku!
-    _, password, host, port = re.search(r"(.*)://redistogo:(.*)@(.*):(\d*)", reddistogo).groups()
-    r = redis.Redis(host=host, port=int(port), password=password)
-else: # local!
-    r = redis.Redis()
+r = database.get_redis_object()
 
 class GameEntry():
     """Represents database information associated with a game."""
@@ -86,5 +83,4 @@ def get_gameEntries(player=None):
         return [gameEntry for gameEntry in gameEntries
                 if player in gameEntry.players]
     else:
-        print [GameEntry(gid) for gid in r.smembers('game_entries')]
         return [GameEntry(gid) for gid in r.smembers('game_entries')]

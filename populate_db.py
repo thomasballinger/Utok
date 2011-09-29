@@ -8,8 +8,9 @@ from random import choice, randint, shuffle
 import sys
 import os
 import models
+import database
 
-r = redis.Redis()
+r = database.get_redis_object()
 
 def add_map(name, mapfile):
     mapstring = open(mapfile).read()
