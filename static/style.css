@@ -1,0 +1,162 @@
+body            { font-family: "Droid Sans",Arial,Helvetica,sans-serif; 
+                  /*background: #fffbef;*/
+                  /*background: #f5f5f5;*/
+                  /*background: #fffdf6;*/
+                  /*background: #a0b0c0;*/
+                  background: #000;
+                  /*background: #eef0eb;*/
+                  /*background: #ead7be;*/
+                  /*color: #595959;*/
+                  color: #fff;
+                  text-align: center;
+                }
+body a          {
+  text-decoration: none
+}
+h1, h2       { 
+                  /*color: #377BA8; */
+                  color: #777; 
+                }
+h1, h2          { font-family: 'Georgia', serif; 
+                  margin: 0; 
+                }
+ h1 {
+  color: #243233;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  }
+
+h1              { 
+                  /*border-bottom: 2px solid #eee; */
+                }
+h2              { font-size: 1.2em; 
+                }
+input           { font-size: 1.0em; 
+                }
+
+.metanav        { font-size: 0.8em; 
+                  padding: 0.7em;  
+                  overflow: hidden; 
+                  /*background: #FAFAFA;*/
+                  height: 1.3em;
+                  /*border: 1px solid #ddd;*/
+                }
+.metanav a { color: red }
+.flash-top      { background: #CEE5F5;
+                  /*border: 1px solid #AACBE2; */
+                  font-size: 0.9em; 
+                  margin-top: 0.5em;
+                }
+
+.page           { margin-top: 0.5em; 
+                  /*border: 2px solid #ccc;*/
+                  padding: 0.8em; 
+                  /*background: white; */
+                  overflow:hidden;
+                }
+.page h1        {
+                  border-bottom: 1px solid #ccc;
+                  /*-moz-box-shadow: 0 1px 0;*/
+                }
+.create_project_page  { margin-top: 0.5em; 
+                        /*border: 2px solid #ccc;*/
+                        padding: 0.8em; 
+                        /*background: white; */
+                        overflow:hidden
+                      }
+.left_adjust    { margin-left: 14.5em;
+                }
+#left-sidebar   { float:left; 
+                  margin-top: 0.5em; 
+                  width: 12em; 
+                  /*border: 2px solid #ccc; */
+                  padding: 0.8em; 
+                  /*background: white; */
+                  top: 0; left: 0;
+                }
+
+#left-sidebar-heading { 
+                        /*border-bottom: 2px solid #eee; */
+                        margin-bottom: 4px; 
+                      }
+#left-sidebar a { margin-left: 0.0em; 
+                  padding: 0.0em;
+                  color: black;
+                }
+.entries        { list-style: none; 
+                  margin: 0; 
+                  padding: 0; 
+                }
+.entries li     { margin: 0.8em 1.2em; }
+.entries li h2  { margin-left: -1em;
+                }
+.add-entry      { font-size: 0.8em;  
+                }
+.add-entry dl   { 
+                  /*font-weight: bold; */
+                }
+label           {
+                  font-style: italic;
+                }
+#tract_submit    {
+                  border-bottom: 2px solid #eee;
+                  padding-bottom: 0.5em;
+                }
+.flash          { background: #CEE5F5; 
+                  padding: 0.5em;
+                  /*border: 1px solid #AACBE2; */
+                }
+.error          { background: #F0D6D6; padding: 0.5em; }
+.quiet          {color:#999;}
+.alignleft      { text-align:left; float: left;}
+.alignright     { text-align:right; float: right;}
+
+table           { 
+                  /*background-color: #eee; */
+                  width: 100%;  
+                  font-size: 0.8em;
+                  border-collapse: collapse;
+                }  
+thead td        { 
+                  /*font-weight: bold; */
+                  font-style: italic;
+                }  
+tbody td        { 
+                  /*background-color: white;  */
+                  padding: 0.2em;
+                }  
+tbody td.odd    { background-color: #ddd;  
+                }  
+
+.orange_button    {
+                 /*-moz-box-shadow: 0 1px 2px;*/
+                 background: #F85931;
+                 color: white;
+                 padding: 2px;
+                 padding-top: 4px;
+                 padding-bottom: 4px;
+                 font-weight: bold;
+                 line-height: 15px;
+                 font-size: 12px;
+               }
+.emphasized_cell {
+                 color: #F85931;
+                 /*font-weight: bold;*/
+               }
+
+.jqplot-point-label {
+ border: 1.5px solid #aaaaaa;
+  padding: 1px 3px;
+  background-color: #eeccdd;
+}
+
+.textgame { 
+  background: #000;
+  margin: 0 auto;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+.text {
+  align: left;
+}

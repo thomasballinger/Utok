@@ -52,7 +52,7 @@ def display_game_text(game_id):
 
     d = textDisplay.Display(g)
     s = d.get()
-    return render_template('textgame.html', gameEntry=gameEntry, game=g, command=cmd, gamestring=s)
+    return render_template('guigame.html', gameEntry=gameEntry, game=g, command=cmd, gamestring=s)
 
 @app.route('/game/<int:game_id>/cmd/<path:command>')
 def input_command(game_id, command):
@@ -65,7 +65,7 @@ def input_command(game_id, command):
 
     d = textDisplay.Display(g)
     s = d.get()
-    return render_template('textgame.html', gameEntry=gameEntry, game=g, command=' '.join(words), gamestring=s)
+    return render_template('guigame.html', gameEntry=gameEntry, game=g, command=' '.join(words), gamestring=s)
 
 
 @app.route('/game/graphics/<int:game_id>/')
