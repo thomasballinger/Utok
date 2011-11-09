@@ -11,6 +11,8 @@ from flask import url_for
 from flask import abort
 from flask import render_template
 from flask import flash
+from flask import jsonify
+
 from utok import textDisplay
 from utok import game
 from utok import play_cli
@@ -71,6 +73,14 @@ def input_command(game_id, command):
 @app.route('/game/graphics/<int:game_id>/')
 def display_game_graphics(game_id):
     pass
+
+@app.route('/_get_turn_stage/')
+def getTurnState():
+    game_id = request.args.get('game_id', 0, type=int)
+    gameEntry = models.GameEntry(game_id)
+    g = gameEntry.game
+    stage = g.turnStage
+    return jsonify(stage=stage)
 
 if __name__ == '__main__':
     import populate_db

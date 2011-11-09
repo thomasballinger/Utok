@@ -52,9 +52,25 @@
             });
         };
 
+        $.ajaxSetup({
+            cache: false
+        });
+
+        function getTurnStage() {
+            var url = '';
+            $.getJSON('/_get_turn_stage',
+                    {game_id: $('input[name="what_is_this_input"]').val()
+                    }, function(data) {
+                    alert("JSON request complete");
+                    $("#result").text(data.result);
+                    });
+        }
+
+
         bindlinks();
         $.mapster.impl.init();
         $usamap.mapster(default_options);
+        getTurnState();
     });
 </script>
 
@@ -62,13 +78,13 @@
 
 <div class=guigame>
 
-	<pre>
+    <pre>
   {% if command %}
   last command: {{command}}
   {% endif %}
   current turn: {{game.whosTurn}}
   turn stage: {{game.turnStage}}
-  {% if game.turnStage == 'reinforce' %}	
+  {% if game.turnStage == 'reinforce' %}    
   left to reinforce: {{game.reinforcementsToPlace[game.whosTurn]}}
   {% endif %}
 
