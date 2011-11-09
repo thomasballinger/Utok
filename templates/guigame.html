@@ -2,57 +2,62 @@
 
 {% block body %}
 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='jquery.imagemapster.js') }}"></script>
+<script language="javascript" type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js"></script>
+<!--[if lt IE 9]><script language="javascript" type="text/javascript" src="excanvas.js"></script><![endif]-->
+<script language="javascript" type="text/javascript" src="{{ url_for('static', filename='jquery_imagemapster.js') }}"></script>
 <script type="text/javascript">
 
+    $(document).ready(function () {
+        var $statelist, $usamap, ratio,
+        mapsterConfigured = function () {
+            // set html settings values
+            var opts = $usamap.mapster('get_options', null, true);
+            if (!ratio) {
+                ratio = $usamap.width() / $usamap.height();
+            }
+        },
+        default_options =
+        {
+            fillOpacity: 0.5,
+            render_highlight: {
+                fillColor: '2aff00',
+                stroke: false,
+            },
+            render_select: {
+                fillColor: 'ff000c',
+                stroke: false,
+            },
+            //render_zoom: {
+            //    altImage: 'images/usa_map_huge.jpg'
+            //},
+            fadeInterval: 50,
+            isSelectable: true,
+            singleSelect: false,
+            mapKey: 'state',
+            mapValue: 'full',
+            sortList: "asc",
+            onConfigured: mapsterConfigured,
+            showToolTip: false,
+            toolTipClose: ["area-mouseout"],
+        };
 
-$(document).ready(function() {
-  var $usamap,
-  mapsterConfigured = function () {
-    set html settings values
-  var opts = $usamap.mapster('get_options', null, true);
-$('#stroke_highlight').prop("checked", opts.render_highlight.stroke);
-$('#strokewidth_highlight').val(opts.render_highlight.strokeWidth);
-$('#fill_highlight').val(opts.render_highlight.fillOpacity);
-$('#strokeopacity_highlight').val(opts.render_highlight.strokeOpacity);
-$('#stroke_select').prop("checked", opts.render_select.stroke);
-$('#strokewidth_select').val(opts.render_select.strokeWidth);
-$('#fill_select').val(opts.render_select.fillOpacity);
-$('#strokeopacity_select').val(opts.render_select.strokeOpacity);
-$('#img_width').val($usamap.width());
-  },
-  default_options = {
-    render_highlight: {
-                        fillOpacity: 0.2,
-fillColor: '222222',
-stroke: false
-                      },
-    render_select: {
-                     fillOpacity: 0.8,
-                     fillColor: '000000',
-                     stroke: false
-                   },
-    stroke: true,
-    strokeOpacity: 1,
-    strokeWidth: 2,
-    fade: true,
-    fadeInterval: 50,
-    isSelectable: true,
-    singleSelect: false,
-    mapKey: 'state',
-    onConfigured: mapsterConfigured,
-    toolTipClose: ["area-mouseout"],
-  };
-$usamap = $('#usa_image');
-$.mapster.impl.init();
-$usamap.mapster(default_options);
+        $usamap = $('#usa_image');
 
-});
+        function bindlinks() {
+            $('*').unbind();
 
+            $("#update").bind("click", function (e) {
+                e.preventDefault();
+                $('#cmd').val($("#usa_image").mapster("get"));
+            });
+        };
 
-
+        bindlinks();
+        $.mapster.impl.init();
+        $usamap.mapster(default_options);
+    });
 </script>
+
 
 
 <div class=guigame>
@@ -74,16 +79,17 @@ $usamap.mapster(default_options);
 </pre>
 
   
-<div style="width:518px; height:320px;border:0; overflow: auto; ">
-  <img style="width:500px;height:309px;border:0;" id="usa_image" src="{{ url_for('static', filename='usa_map.png') }}" usemap="#usa" >
-</div>
+<img id="usa_image" src="{{ url_for('static', filename='usa_map.png') }}" usemap="#usa" >
+<br>
 
 <form action="/game/text/{{gameEntry.gid}}/" method="post"> 
   Command: 
-  <input type="text" name="cmd" value="{{game.turnStage}} "/><br/>
+  <input type="text" id="cmd" name="cmd" value="{{game.turnStage}} "/><br/>
   <br>
   <input type="submit" value="Submit" />
 </form>
+  <input type="submit" id="update" value="Selections" />
+<span id="selections"></span>
 
 <pre>
 <div class=text>

@@ -98,10 +98,6 @@ input           { font-size: 1.0em;
 label           {
                   font-style: italic;
                 }
-#tract_submit    {
-                  border-bottom: 2px solid #eee;
-                  padding-bottom: 0.5em;
-                }
 .flash          { background: #CEE5F5; 
                   padding: 0.5em;
                   /*border: 1px solid #AACBE2; */
@@ -110,23 +106,6 @@ label           {
 .quiet          {color:#999;}
 .alignleft      { text-align:left; float: left;}
 .alignright     { text-align:right; float: right;}
-
-table           { 
-                  /*background-color: #eee; */
-                  width: 100%;  
-                  font-size: 0.8em;
-                  border-collapse: collapse;
-                }  
-thead td        { 
-                  /*font-weight: bold; */
-                  font-style: italic;
-                }  
-tbody td        { 
-                  /*background-color: white;  */
-                  padding: 0.2em;
-                }  
-tbody td.odd    { background-color: #ddd;  
-                }  
 
 .orange_button    {
                  /*-moz-box-shadow: 0 1px 2px;*/
@@ -143,12 +122,6 @@ tbody td.odd    { background-color: #ddd;
                  color: #F85931;
                  /*font-weight: bold;*/
                }
-
-.jqplot-point-label {
- border: 1.5px solid #aaaaaa;
-  padding: 1px 3px;
-  background-color: #eeccdd;
-}
 
 .textgame { 
   background: #000;
