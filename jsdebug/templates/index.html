@@ -1,0 +1,36 @@
+<script type=text/javascript src="//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js"></script>
+<script language="javascript" type="text/javascript" src="{{ url_for('static', filename='jquery_imagemapster.js') }}"></script>
+<script type=text/javascript>
+	$(document).ready(function () {
+
+	function displayResult(data) {
+		$("#result").text(data.result);
+	};
+
+  function dojson() {
+	$.getJSON('/_add_numbers', {
+        a: 2,
+        b: 3 
+		}, 
+		displayResult
+	  );
+  };
+
+  $(function() {
+    $('a#calculate').bind('click', function() {
+	  dojson()
+      return false;
+    });
+  });
+	
+  alert('about to do json')
+  dojson();
+
+	});
+</script>
+<h1>jQuery Example</h1>
+<p><input type=text size=5 name=a> +
+   <input type=text size=5 name=b> =
+   <span id=result>?</span>
+<p><a href=# id=calculate>calculate server side</a>
+

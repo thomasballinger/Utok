@@ -57,17 +57,31 @@
             alert('JSON request complete');
         };
 
-        var datadict = {
+        var tomdatadict = {
             game_id : "10",
             stuff : "yay"
             };
 
-        function getTurnStage() {
-            var url = '';
-            $.getJSON('/_get_turn_stage',
-                    datadict,
-                    alertJSONdone
-                    );
+        function tomgetTurnStage() {
+            alert('starting json request')
+            $.getJSON('/_get_turn_stage', {
+                    gameid : 10,
+                    stuff : 0
+                },
+                alertJSONdone
+            );
+            alert('starting json request')
+        };
+
+        function getTurnStageDebug() {
+            $.ajax({
+                type: "GET",
+                url: "/_get_turn_stage",
+                data: {gameid: 10},
+                dataType: "json",
+                error: function(xhr, status, error) {alert("error - JSON no returning correctly");},
+                success: alertJSONdone
+                });
         };
 
         alert('code about to run');
@@ -78,7 +92,8 @@
                     $("#result").text(data.result);
                     }));
         */
-        getTurnStage();
+        tomgetTurnStage();
+        //getTurnStageDebug();
         bindlinks();
         $.mapster.impl.init();
         $usamap.mapster(default_options);

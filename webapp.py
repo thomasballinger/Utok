@@ -75,12 +75,12 @@ def display_game_graphics(game_id):
     pass
 
 @app.route('/_get_turn_stage/')
-def getTurnState():
+def get_turn_stage():
     print 'json response occurring'
     print request.args
-    game_id = request.args.get('game_id', 0, type=int)
+    game_id = request.args.get('gameid', 0, type=int)
     print game_id
-    gameEntry = models.GameEntry(game_id)
+    gameEntry = models.GameEntry(7)
     g = gameEntry.game
     stage = g.turnStage
     return jsonify(stage=stage)
