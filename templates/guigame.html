@@ -51,26 +51,37 @@
                 $('#cmd').val($("#usa_image").mapster("get"));
             });
         };
+        alert('trying to define functions');
 
-        $.ajaxSetup({
-            cache: false
-        });
+        function alertJSONdone(data) {
+            alert('JSON request complete');
+        };
+
+        var datadict = {
+            game_id : "10",
+            stuff : "yay"
+            };
 
         function getTurnStage() {
             var url = '';
             $.getJSON('/_get_turn_stage',
+                    datadict,
+                    alertJSONdone
+                    );
+        };
+
+        alert('code about to run');
+        /*alert(getJSON('/_get_turn_state',
                     {game_id: $('input[name="what_is_this_input"]').val()
                     }, function(data) {
                     alert("JSON request complete");
                     $("#result").text(data.result);
-                    });
-        }
-
-
+                    }));
+        */
+        getTurnStage();
         bindlinks();
         $.mapster.impl.init();
         $usamap.mapster(default_options);
-        getTurnState();
     });
 </script>
 
