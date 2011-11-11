@@ -51,49 +51,16 @@
                 $('#cmd').val($("#usa_image").mapster("get"));
             });
         };
-        alert('trying to define functions');
 
-        function alertJSONdone(data) {
-            alert('JSON request complete');
-        };
-
-        var tomdatadict = {
-            game_id : "10",
-            stuff : "yay"
-            };
-
-        function tomgetTurnStage() {
-            alert('starting json request')
+        function getTurnStage() {
             $.getJSON('/_get_turn_stage', {
                     gameid : 10,
-                    stuff : 0
                 },
-                alertJSONdone
+                function() {alert('json done');}
             );
-            alert('starting json request')
         };
 
-        function getTurnStageDebug() {
-            $.ajax({
-                type: "GET",
-                url: "/_get_turn_stage",
-                data: {gameid: 10},
-                dataType: "json",
-                error: function(xhr, status, error) {alert("error - JSON no returning correctly");},
-                success: alertJSONdone
-                });
-        };
-
-        alert('code about to run');
-        /*alert(getJSON('/_get_turn_state',
-                    {game_id: $('input[name="what_is_this_input"]').val()
-                    }, function(data) {
-                    alert("JSON request complete");
-                    $("#result").text(data.result);
-                    }));
-        */
-        tomgetTurnStage();
-        //getTurnStageDebug();
+        getTurnStage();
         bindlinks();
         $.mapster.impl.init();
         $usamap.mapster(default_options);

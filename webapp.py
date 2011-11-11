@@ -74,7 +74,7 @@ def input_command(game_id, command):
 def display_game_graphics(game_id):
     pass
 
-@app.route('/_get_turn_stage/')
+@app.route('/_get_turn_stage')
 def get_turn_stage():
     print 'json response occurring'
     print request.args
