@@ -5,32 +5,38 @@ class Game:
 
     Includes full specification of the map, rules, players and current game state.
     Includes the NAME ONLY of the graphical map file, along with coordinates of territories on this map."""
-    def __init__(self,nodeNetwork=None, players={}, bonuses=[], mapString=None, coordinates=None, mapFile=None, settingsMap={}):
-        self.mapFile = mapFile
-        self.coordinates = coordinates
-        self.rules = Rules(map=nodeNetwork, players=players)
-        self.whosTurn = self.rules.players[0]
-        self.turnStage = 'reinforce'
-        self.reinforcementsToPlace = {}
-        self.lastAttack = None
-        self.fortifies = 1
-        if 'fortifies' in settingsMap:
-            self.fortifies = int(settingsMap['fortifies'])
-        self.fortifiesLeft = self.fortifies
-        self.bonuses=bonuses
-        for player in self.rules.players:
-            self.reinforcementsToPlace[player]=0
-        self.reinforced = False
-        if not mapString and not (coordinates and mapFile):
-            print "this game has no pretty visualization available"
-        self.mapString = mapString
-        self.settingsMap = settingsMap
-        self.fog = False
-        if 'fog' in self.settingsMap:
-            self.fog = self.settingsMap['fog']
-        self.selectionList = []
-        self.showAttackResult = False
-        self.justMadeFreeMove = False
+    def __init__(self,nodeNetwork=None, players={}, bonuses=[], mapString=None, coordinates=None, mapFile=None, settingsMap={}, json=None):
+        if json:
+            self.jsoninit(json)
+        else:
+            self.mapFile = mapFile
+            self.coordinates = coordinates
+            self.rules = Rules(map=nodeNetwork, players=players)
+            self.whosTurn = self.rules.players[0]
+            self.turnStage = 'reinforce'
+            self.reinforcementsToPlace = {}
+            self.lastAttack = None
+            self.fortifies = 1
+            if 'fortifies' in settingsMap:
+                self.fortifies = int(settingsMap['fortifies'])
+            self.fortifiesLeft = self.fortifies
+            self.bonuses=bonuses
+            for player in self.rules.players:
+                self.reinforcementsToPlace[player]=0
+            self.reinforced = False
+            if not mapString and not (coordinates and mapFile):
+                print "this game has no pretty visualization available"
+            self.mapString = mapString
+            self.settingsMap = settingsMap
+            self.fog = False
+            if 'fog' in self.settingsMap:
+                self.fog = self.settingsMap['fog']
+            self.selectionList = []
+            self.showAttackResult = False
+            self.justMadeFreeMove = False
+
+    def jsonint(self, json):
+        pass
 
     def _giveReinforcements(self):
         if self.reinforced == True:
