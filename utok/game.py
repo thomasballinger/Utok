@@ -119,6 +119,15 @@ class Game:
         else:
             return False
 
+    def player_reinforce_availableCountries(self, player):
+        """Returns countries available to be reinforced"""
+        if self.reinforcementsToPlace[player]<=0:
+            return []
+        return self.getCountriesOwned(player)
+
+    def player_reinforce_availableNumbers(self, player, country):
+        return range(1, self.getReinforcements(player)+1)
+
     def player_attack(self,fromCountry,toCountry,howMany,player):
         if self.whosTurn != player:
             #raise Exception, 'player error'
@@ -173,6 +182,16 @@ class Game:
             self.justMadeFreeMove = False
             return output
 
+    def player_attack_availableFroms(self, player):
+        player_countries = self.getCountriesOwned(player)
+        return [c for c in player_countries if (self.getTroops(c) > 1 and self.getAdjacentAttacks(c))]
+
+    def player_attack_availableTos(self, player, from_):
+        return self.getAdjacentAttacks(from_)
+
+    def player_attack_availableNumbers(self, player, from_, to):
+        return range(1, min(self.getTroops(from_), 4))
+
     def player_freeMove(self,fromCountry,toCountry,howMany,player):
         if type(player)!=type('string') and type(player) != type(u'string'):
             return False
@@ -211,6 +230,9 @@ class Game:
             raise Exception, 'rules failed'
             return False
 
+    def player_freemove_availableNumbers():
+        return range(1, self.getTroops(from_))
+
     def player_fortify(self,fromCountry,toCountry,howMany,player):
         if type(player)!=type('string') and type(player) != type(u'string'):
             return False
@@ -241,6 +263,19 @@ class Game:
             return True
         else:
             return False
+
+    def player_fortify_availableFroms(self, player):
+        return [c for c in self.getCountriesOwned(player) if
+                (self.getTroops(c) > 1 and any(
+                [c2 for c2 in self.getAdjacentCountries(c)
+                    if self.isOwned(c2, player)]))
+                ]
+
+    def player_fortify_availableTos(self, player, from_):
+        return [c for c in self.getAdjacentCountries(from_) if self.isOwned(c, player)]
+
+    def player_fortify_availableNumbers(self, player, from_, to):
+        return range(1, self.getTroops(from_))
 
     def player_skip(self, player):
         if self.whosTurn != player:
@@ -276,6 +311,9 @@ class Game:
     def getCoordinates(self, country):
         return self.coordinates[country]
 
+    def getCountriesOwned(self, player):
+        return [c for c in self.countries() if self.isOwned(c, player)]
+
     def getAdjacentAttacks(self, country):
         possibleAttacks = []
         player = self.getOwner(country)
@@ -301,9 +339,6 @@ class Game:
 
     def clearSelection(self):
         self.selectionList = []
-
-    def allOwned(countryList, player):
-        return self.rules.isOwned(country, player)
 
     def isCountry(self,country):
         return country in self.countries
@@ -337,7 +372,7 @@ class Game:
 mymap = {'USA':['Canada','Mexico'],'Canada':['USA','Greenland'],'Mexico':['USA','Cuba','England'],'Cuba':['Mexico'],'Greenland':['Canada','Iceland'],'Iceland':['England','Greenland'],'England':['Mexico','Iceland'],'Alaska':['Canada']}
 
 def demo():
-    game = Game(nodeNetwork=mymap, players=['tom', 'alex'], mapString="".join((open('worldmap.txt').readlines()[32:51])))
+    game = Game(nodeNetwork=mymap, players=['tom', 'alex'], mapString="".join((open('data/worldmap.txt').readlines()[32:51])))
 
     rules = game.rules
     print 'assign usa to tom',rules.assignCountry('USA','tom')
